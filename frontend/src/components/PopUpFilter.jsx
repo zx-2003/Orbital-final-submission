@@ -6,7 +6,7 @@ export default function PopUpFilter({ onClose, children }) {
                 padding: '20px',
                 borderRadius: '8px',
                 minWidth: '200px',
-                position: 'fixed',
+                position: 'absolute',
                 background: '#fff'
             }}
                 onClick={(e) => e.stopPropagation()}> {/* stops popup from closing when clicking inside */}
