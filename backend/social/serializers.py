@@ -23,6 +23,7 @@ class PostSerializer(serializers.ModelSerializer):
     # new fields for like, basically to see if someone has liked a post and the like count
     like_count = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
+    image = serializers.ImageField(required=False, allow_null=True, use_url=True)
 
     class Meta:
         model = Post

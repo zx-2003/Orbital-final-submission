@@ -19,5 +19,6 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 
 # RUN python manage.py collectstatic --noinput
-ENV PORT 8080
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+COPY entrypoint.sh /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
+# CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]

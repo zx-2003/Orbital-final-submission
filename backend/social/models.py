@@ -7,6 +7,7 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    # removed upload to post_images/ as for debugging
     image = models.ImageField(upload_to="post_images/", blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True) #display if present
     place_id = models.CharField(max_length=255, blank=True, null=True) #dont display, backend purpose only

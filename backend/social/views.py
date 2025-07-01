@@ -37,13 +37,24 @@ class PostListCreate(generics.ListCreateAPIView):
         user = self.request.user
         return Post.objects.filter(author=user) \
             .annotate(like_count=Count('likes'))
+    
+    def get_serializer_context(self):
+        return {'request': self.request}
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        print("FILES:", self.request.FILES)
+        serializer.is_valid(raise_exception=True)
+        print("Got image:", self.request.FILES.get("image"))
+        print("VALIDATED DATA:", serializer.validated_data)
+        post = serializer.save(author=self.request.user)
+        print("SAVED POST", post.image)
 
 class PublicPostListCreate(APIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_context(self):
+        return {'request': self.request}
 
     def get_queryset(self, request, user_id):
         target_user_posts = Post.objects.filter(author=user_id)
@@ -75,6 +86,9 @@ class FollowingListExplore(generics.ListCreateAPIView):
     ordering_fields = ['created_at', 'like_count']
     ordering = ['-created_at']
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+
     def get_queryset(self):
         user = self.request.user
         followed_profiles = user.following.all()
@@ -88,6 +102,9 @@ class FollowingListExplore(generics.ListCreateAPIView):
 class PostDelete(generics.DestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_context(self):
+        return {'request': self.request}
 
     def get_queryset(self):
         user = self.request.user

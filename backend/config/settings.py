@@ -21,15 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # load_dotenv(os.path.join(BASE_DIR, '.env'))
 load_dotenv(BASE_DIR / ".env")
 
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
 GS_BUCKET_NAME = 'deployment2-0bucket'
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, 'gcs-service-key.json')
-)
+if os.environ.get("USE_SERVICE_FILE") == "1":
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+        os.path.join(BASE_DIR, 'gcs-service-key.json')
+    )
+else:
+    GS_CREDENTIALS = None
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 STATIC_URL="/static/"
+STATIC_ROOT= os.path.join(BASE_DIR, "staticfiles")
 
 STORAGES = {
     "default": {
@@ -52,9 +57,12 @@ STORAGES = {
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+# DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = ["https://nomnom-backend-820186733769.asia-southeast1.run.app"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
