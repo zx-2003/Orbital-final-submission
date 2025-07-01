@@ -23,6 +23,8 @@ local_settings.py
 .env
 .env.*
 
+gcs-service-key
+
 # Virtualenv
 venv/
 env/
