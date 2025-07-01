@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+.env
+gcs-service-key.json
+/media
+/static
