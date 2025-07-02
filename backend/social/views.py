@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Like
 from django.db.models import Count
+from django.conf import settings
 
 # generics.blah blah handles 2 kinds of http requests being Post and get
 # permission classes determine who can view the info
@@ -46,6 +47,9 @@ class PostListCreate(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         print("Got image:", self.request.FILES.get("image"))
         print("VALIDATED DATA:", serializer.validated_data)
+        print("Default file storage", settings.DEFAULT_FILE_STORAGE)
+        print("Gs bucket name", settings.GS_BUCKET_NAME)
+        print("gs credentials", settings.GS_CREDENTIALS)
         post = serializer.save(author=self.request.user)
         print("SAVED POST", post.image)
 
