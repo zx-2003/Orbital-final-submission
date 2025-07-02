@@ -49,7 +49,6 @@ class PostListCreate(generics.ListCreateAPIView):
         print("VALIDATED DATA:", serializer.validated_data)
         print("Default file storage", settings.DEFAULT_FILE_STORAGE)
         print("Gs bucket name", settings.GS_BUCKET_NAME)
-        print("gs credentials", settings.GS_CREDENTIALS)
         post = serializer.save(author=self.request.user)
         print("SAVED POST", post.image)
 
