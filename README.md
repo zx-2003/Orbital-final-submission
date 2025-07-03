@@ -6,6 +6,10 @@ Instructions to test:
   or (Optional) use your own Maps JavaScript API, Places API (new) to test food finder @ https://console.cloud.google.com/
 - (Optional) Get telegramAPI to test promotion listener, signup @ https://my.telegram.org/auth
 
+IMPORTANT: 
+- as of 3/7/2025 places api has been turned off during testing stage.
+- For owners of nomnom: to ensure that google maps api works for the app, make sure to turn on Places API (new) / Places API in google cloud
+- This will eat into the credits, of course. 
 
 Backend Startup:
   - Open terminal
