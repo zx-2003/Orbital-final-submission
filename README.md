@@ -11,6 +11,10 @@ IMPORTANT:
 - For owners of nomnom: to ensure that google maps api works for the app, make sure to turn on Places API (new) / Places API in google cloud
 - This will eat into the credits, of course. 
 
+Our website link: 
+https://deployment2-gl8g.vercel.app/
+
+
 Backend Startup:
   - Open terminal
   - `python -m venv .venv` create virtual environment
