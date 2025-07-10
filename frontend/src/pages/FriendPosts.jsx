@@ -33,10 +33,10 @@ function FriendPosts() {
     return (
         <div>
             <NavigationBar />
-            <div style={{margin: "20px"}}>
-                <h2>See what your friends have been up to</h2>
+            <div className="background">
+                <h2 className="title">See what your friends have been up to</h2>
 
-                <div style={{ margin: "10px 0"}}>
+                <div className="filter-bar">
                     <select id="sort" onChange={handleOrderingChange} value={ordering}>
                         <option value="-created_at">Most Recent</option>
                         <option value="-like_count">Most Liked</option>

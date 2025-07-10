@@ -66,6 +66,7 @@ form input[type="submit"]:hover {
 .post-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: flex-start;
   gap: 20px;
+  align-items: stretch;
 }

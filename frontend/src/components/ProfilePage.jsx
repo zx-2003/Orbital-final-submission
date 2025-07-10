@@ -31,21 +31,21 @@ const ProfilePage = () => {
   return (
     <div>
       <NavigationBar />
-      <h2 className="profile-title">My Profile</h2>
-      <div className="container">
-        <img className="profile-picture"
-          src={profile.profile_picture || DefaultProfilePicture}>  
-        </img>
+        <div className="container">
+          <img className="profile-picture"
+            src={profile.profile_picture || DefaultProfilePicture}>  
+          </img>
 
-        <div className="profile-info">
-          <p><strong>Username:</strong> {profile.user.username}</p>
-          <p><strong>Email:</strong> {profile.user.email}</p>
-          <p><strong>Dietary Preferences:</strong> {profile.dietary_requirements.join(", ")}</p>
-          <p><strong>Cuisine Preferences:</strong> {profile.dietary_preferences.join(", ")}</p>
-          <p><strong>Followers:</strong> {profile.followers_count}</p>
-          <p><strong>Following:</strong> {profile.following_count}</p>
+          <div className="profile-info">
+            <h2 className="profile-title">My profile</h2>
+            <p><strong>Username:</strong> {profile.user.username}</p>
+            <p><strong>Email:</strong> {profile.user.email}</p>
+            <p><strong>Dietary Preferences:</strong> {profile.dietary_requirements.join(", ")}</p>
+            <p><strong>Cuisine Preferences:</strong> {profile.dietary_preferences.join(", ")}</p>
+            <p><strong>Followers:</strong> {profile.followers_count}</p>
+            <p><strong>Following:</strong> {profile.following_count}</p>
+          </div>
         </div>
-      </div>
     </div>
   );
 };

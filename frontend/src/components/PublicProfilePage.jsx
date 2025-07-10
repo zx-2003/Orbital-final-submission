@@ -55,22 +55,26 @@ function PublicProfilePage() {
   return (
     <div>
       <NavigationBar />
-      <div className="container">
-        <img className="profile-picture"
-          src={profile.profile_picture || DefaultProfilePicture}>  
-        </img>
+      <div>
+        <div className="container">
+          <img className="profile-picture"
+            src={profile.profile_picture || DefaultProfilePicture}>  
+          </img>
 
-        <div className="profile-info">
-          <h4>Username: {profile.user.username}</h4>
-          <h4>Follower Count: {profile.followers_count}</h4>
-          <h4>Following Count: {profile.following_count}</h4>
-          <h4>Dietary Preferences: {profile.dietary_requirements.join(", ")}</h4>
-          <h4>Cuisine Preferences: {profile.dietary_preferences.join(", ")}</h4>
+          <div className="profile-info">
+            <h2 className="profile-title">{profile.user.username}'s profile</h2>
+            <p><strong>Username: {profile.user.username}</strong></p>
+            <p><strong>Follower Count: {profile.followers_count}</strong></p>
+            <p><strong>Following Count: {profile.following_count}</strong></p>
+            <p><strong>Dietary Preferences: {profile.dietary_requirements.join(", ")}</strong></p>
+            <p><strong>Cuisine Preferences: {profile.dietary_preferences.join(", ")}</strong></p>
 
-          <button onClick={handleFollowToggle}>
-            {profile.is_following ? "Unfollow" : "Follow"}
-          </button>
+            <button className="follow-button" onClick={handleFollowToggle}>
+              {profile.is_following ? "Unfollow" : "Follow"}
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
   );

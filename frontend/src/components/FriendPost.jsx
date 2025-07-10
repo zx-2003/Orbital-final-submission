@@ -29,28 +29,28 @@ function FriendPost({post}) {
     }
 
     return (
-        <div className="post-container">
-            <img src={post.image} className="post-image"></img>
-            <p className="post-author" onClick={() => navigate(`/publicProfile/${post.author}`)}>
-                Posted by: {post.author_username} 
-            </p>
-            <p className="post-title">Title: {post.title}</p>
-            <p className="post-content">{post.content}</p>
-            {
-                post.location !== "" && (
-                    <p className = "location">Location: {post.location}</p>
-                )
-            }
-            {
-                post.rating !== null && (
-                    <p className = "rating">Rating: {"⭐".repeat(post.rating)}</p>
-                )
-            }
-            <p className="post-date">{formattedDate}</p>
-            <button style={{ border: "none" }} onClick={handleLikeToggle}>
-                {liked ? "❤️": "🤍"} {likeCount}
-            </button>
-        </div>
+            <div className="post-container">
+                <img src={post.image} className="post-image"></img>
+                <p className="post-author" onClick={() => navigate(`/publicProfile/${post.author}`)}>
+                    Posted by: {post.author_username} 
+                </p>
+                <p className="post-title">Title: {post.title}</p>
+                <p className="post-content">{post.content}</p>
+                {
+                    post.location !== "" && (
+                        <p className = "location">Location: {post.location}</p>
+                    )
+                }
+                {
+                    post.rating !== null && (
+                        <p className = "rating">Rating: {"⭐".repeat(post.rating)}</p>
+                    )
+                }
+                <p className="post-date">{formattedDate}</p>
+                <button style={{ border: "none" }} onClick={handleLikeToggle}>
+                    {liked ? "❤️": "🤍"} {likeCount}
+                </button>
+            </div>
     );
 }
 

@@ -1,18 +1,33 @@
 .post-container {
+  flex: 1 1 300px;
+  min-width: 200px;
+  max-width: 400px;
+
+  background-color: whitesmoke;
   padding: 10px;
   margin: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  justify-content: center;
-  width: 400px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.filter-bar {
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .post-image {
-  width: 200px;
-  height: 300px;
-  margin: 0 auto;
-  display: block;
-  padding: 10px;
+  width: auto;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
 .post-title {
@@ -28,6 +43,10 @@
   font-size: 0.8rem;
 }
 
+.post-like-button {
+  margin-top: auto;
+}
+
 .delete-button {
   background-color: #f44336; 
   color: white;
@@ -36,8 +55,13 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: auto;
 }
 
 .delete-button:hover {
   background-color: #d32f2f; 
+}
+
+.background {
+  background-color: lightyellow;
 }
