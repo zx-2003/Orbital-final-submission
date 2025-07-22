@@ -7,9 +7,8 @@ from .models import Post
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Like
+from .models import Like, SavedPosts
 from django.db.models import Count
-from django.conf import settings
 
 # generics.blah blah handles 2 kinds of http requests being Post and get
 # permission classes determine who can view the info
@@ -38,26 +37,13 @@ class PostListCreate(generics.ListCreateAPIView):
         user = self.request.user
         return Post.objects.filter(author=user) \
             .annotate(like_count=Count('likes'))
-    
-    def get_serializer_context(self):
-        return {'request': self.request}
 
     def perform_create(self, serializer):
-        print("FILES:", self.request.FILES)
-        serializer.is_valid(raise_exception=True)
-        print("Got image:", self.request.FILES.get("image"))
-        print("VALIDATED DATA:", serializer.validated_data)
-        print("Default file storage", settings.DEFAULT_FILE_STORAGE)
-        print("Gs bucket name", settings.GS_BUCKET_NAME)
-        post = serializer.save(author=self.request.user)
-        print("SAVED POST", post.image)
+        serializer.save(author=self.request.user)
 
 class PublicPostListCreate(APIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_serializer_context(self):
-        return {'request': self.request}
 
     def get_queryset(self, request, user_id):
         target_user_posts = Post.objects.filter(author=user_id)
@@ -89,9 +75,6 @@ class FollowingListExplore(generics.ListCreateAPIView):
     ordering_fields = ['created_at', 'like_count']
     ordering = ['-created_at']
 
-    def get_serializer_context(self):
-        return {'request': self.request}
-
     def get_queryset(self):
         user = self.request.user
         followed_profiles = user.following.all()
@@ -105,9 +88,6 @@ class FollowingListExplore(generics.ListCreateAPIView):
 class PostDelete(generics.DestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_serializer_context(self):
-        return {'request': self.request}
 
     def get_queryset(self):
         user = self.request.user
@@ -124,6 +104,8 @@ class ToggleLike(APIView):
 
         # this is basically saying find an existing like object with these parameters if not create a new like
         # obj that is associated with that post
+        # like is the Like instance that exists if we made the object through get or create
+        # created is the boolean that tells us if the thing was successfully made
         like, created = Like.objects.get_or_create(user=user, post=post)
 
         if not created:
@@ -131,4 +113,32 @@ class ToggleLike(APIView):
             return Response({'liked': False, 'like_count': post.likes.count()})
         else:
             return Response({'liked': True, 'like_count': post.likes.count()})
+        
+class ToggleSavePost(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = Post.objects.get(id=post_id)
+        user = request.user
+
+        saved_post, saved = SavedPosts.objects.get_or_create(user=user, post=post)
+
+        if not saved:
+            saved_post.delete()
+            return Response({'is_saved_by_user': False})
+        else:
+            return Response({'is_saved_by_user': True})
+        
+class PostListSaved(generics.ListCreateAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # basically the reverse relationship between Post and SavedPost.
+        # since everytime we save a post a SavePost object is created and multiple users could've saved it
+        # we are using the reverse relationship to see which savedpost objects are associated, given a post then filtering by user
+        return Post.objects.filter(saved_post__user=self.request.user)
+    
+    def get_serializer_context(self):
+        return {'request': self.request}
     

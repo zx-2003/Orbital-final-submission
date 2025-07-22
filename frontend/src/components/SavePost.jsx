@@ -1,20 +1,17 @@
 import React, { useState } from "react"
-import NavigationBar from "./NavBar";
 import "../styles/Post.css"
 import { useNavigate } from "react-router-dom"
 import { toggleLike } from "../api/social"
 import { savePost } from "../api/social"
 
-// this should be taking in the posts from the page created that provides template for all the posts.
-// that will be Friend post in the pages section.
-
-// now latest addition will be for like and unlike, same as previous explore page
-function FriendPost({post}) {
+function SavePost({post, onRemove}) {
     const formattedDate = new Date(post.created_at).toLocaleDateString("sgt")
     const navigate = useNavigate()
 
+    // new states for the liked state of the post and liking the post
     const [liked, setLiked] = useState(post.is_liked);
     const [likeCount, setLikeCount] = useState(post.like_count);
+    const [save, setSavedByUser] = useState(post.is_saved_by_user);
 
     const handleLikeToggle = async () => {
         try {
@@ -22,7 +19,6 @@ function FriendPost({post}) {
             setLiked(res.data.liked);
             setLikeCount(res.data.like_count);
             console.log("API response", res.data);
-
         } catch (err) {
             console.error(err);
             alert("failed to like/unlike the post");
@@ -30,19 +26,20 @@ function FriendPost({post}) {
     }
 
     const handleSaveLogic = async () => {
-            try {
-                const res = await savePost(post.id);
-                console.log("API reponse", res.data);
-                alert("You have saved the post");
-            } catch (err) {
-                console.error(err);
-                alert("failed to save the post");
-            }
+        try {
+            const res = await savePost(post.id);
+            setSavedByUser(res.data.is_saved_by_user);
+            onRemove();
+            console.log("API reponse", res.data);
+        } catch (err) {
+            console.error(err);
+            alert("failed to save the post");
+        }
     }
 
     return (
         <div className="post-container">
-            <img src={post.image} className="post-image"></img>
+            <img className="post-image" src={post.image}></img>
             <p className="post-author" onClick={() => navigate(`/publicProfile/${post.author}`)}>
                 Posted by: {post.author_username} 
             </p>
@@ -59,14 +56,15 @@ function FriendPost({post}) {
                 )
             }
             <p className="post-date">{formattedDate}</p>
-            <button style={{ border: "none" }} onClick={handleLikeToggle}>
+            <button className="post-like-button" onClick={handleLikeToggle}>
                 {liked ? "❤️": "🤍"} {likeCount}
             </button>
+
             <button className="post-save-button" onClick={handleSaveLogic}>
-                Save
+                Remove from saved posts
             </button>
-        </div>
+        </div>        
     );
 }
 
-export default FriendPost
+export default SavePost

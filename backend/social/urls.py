@@ -14,4 +14,8 @@ urlpatterns = [
 
     # new path for liking post to send data to our backend
     path("posts/<int:post_id>/like/", views.ToggleLike.as_view(), name="toggle-like"),
+
+    # new path for saving post to send data to the backend
+    path("posts/<int:post_id>/save/", views.ToggleSavePost.as_view(), name="toggle-save"),
+    path("saved_posts/", views.PostListSaved.as_view(), name="post-saved"),
 ]

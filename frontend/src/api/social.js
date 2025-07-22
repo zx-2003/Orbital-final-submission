@@ -31,8 +31,10 @@ export default social;
 
 // new api route im just leaving here for likes for now
 const toggleLike = (postId) => social.post(`/social/posts/${postId}/like/`);
+// new api route im using to save posts
+const savePost = (postId) => social.post(`/social/posts/${postId}/save/`, postId);
 
-export { toggleLike }
+export { toggleLike, savePost }
 
 export const accountsApi = {
   getProfile: () => social.get("/social/accounts/profile/"),

@@ -1,4 +1,4 @@
-import react from "react"
+import { useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -14,6 +14,7 @@ import FindFood from "./pages/FindFood";
 import FollowingPosts from "./components/FriendPost";
 import FriendPosts from "./pages/FriendPosts";
 import UserPostCreation from "./pages/UserPostCreation";
+import SavedPosts from "./pages/SavedPosts";
 
 function Logout() {
   localStorage.clear()
@@ -30,6 +31,8 @@ function RegisterAndLogout() {
 // protected route needs us to login first, if not we will be redirected to login route. 
 // route will decide which component will be displayed
 function App() {
+  
+
   return (
     <BrowserRouter>
       <Routes>
@@ -46,7 +49,7 @@ function App() {
         <Route path="/edit_profile" element = {<ProtectedRoute> <EditProfile /> </ProtectedRoute>} />
         <Route path="/yourPosts" element = {<ProtectedRoute> <YourPosts /> </ProtectedRoute>} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/explore_posts" element={<ExplorePosts />} />
+        <Route path="/explore_posts" element={<ProtectedRoute> <ExplorePosts /> </ProtectedRoute>} />
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="*" element={<NotFound />}></Route>
         <Route path="/publicProfile/:user_id" element={<ProtectedRoute> <PublicProfilePage /> </ProtectedRoute>}></Route>
@@ -54,6 +57,7 @@ function App() {
         <Route path="/findfood" element={<FindFood />} />
         <Route path="/friendPosts" element={<ProtectedRoute> <FriendPosts /> </ProtectedRoute>} />
         <Route path="/userPostCreation" element={<ProtectedRoute> <UserPostCreation /> </ProtectedRoute>} />
+        <Route path="/savedPosts" element={<ProtectedRoute> <SavedPosts/> </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )

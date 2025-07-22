@@ -28,6 +28,7 @@ function NavigationBar() {
               <NavDropdown.Item href="/friendPosts">Friends</NavDropdown.Item>
               <NavDropdown.Item href="/userPostCreation">Create Post</NavDropdown.Item>
               <NavDropdown.Item href="/yourPosts">Your Posts</NavDropdown.Item>
+              <NavDropdown.Item href="/savedPosts">Saved Posts</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>

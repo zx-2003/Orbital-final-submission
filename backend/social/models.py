@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=300)
-    content = models.TextField()
+    content = models.TextField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    # removed upload to post_images/ as for debugging
     image = models.ImageField(upload_to="post_images/", blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True) #display if present
     place_id = models.CharField(max_length=255, blank=True, null=True) #dont display, backend purpose only
@@ -36,3 +35,16 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user.username} liked {self.post.title}"
+    
+# new Saved post model that will be associated with each post and user
+class SavedPosts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_by_user")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="saved_post")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.post.title}"
