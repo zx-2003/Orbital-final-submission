@@ -44,8 +44,6 @@ STORAGES = {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
         "OPTIONS": {
             "bucket_name": GS_BUCKET_NAME,
-            # commented out for testing
-            #"credentials": GS_CREDENTIALS,
         }
     },
     "staticfiles": {

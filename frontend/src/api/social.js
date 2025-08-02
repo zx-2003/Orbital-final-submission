@@ -1,7 +1,6 @@
 // this is an interceptor that will intercept any request we send and auto add the correct headers so we dont write manually
-// axios is used to send request, making axios interceptor. 
+// axios is used to send request, making axios interceptor. axios also adds the token to send to backend
 // the const api = blah blah allows us to import anyth that is specified in env variable file. Allows us to
-// specify the api path to the backend that is in the .env file. Kinda like the path to backend I think.
 
 import axios from "axios";
 import { ACCESS_TOKEN } from "../constants";
@@ -29,16 +28,15 @@ social.interceptors.request.use(
 
 export default social;
 
-// new api route im just leaving here for likes for now
+// new api route for likes
 const toggleLike = (postId) => social.post(`/social/posts/${postId}/like/`);
-// new api route im using to save posts
+// new api route for posts
 const savePost = (postId) => social.post(`/social/posts/${postId}/save/`, postId);
 
 export { toggleLike, savePost }
 
 export const accountsApi = {
   getProfile: () => social.get("/social/accounts/profile/"),
-  // updateProfile: (data) => social.patch("/social/accounts/profile/", data),
   updateProfile: (data, config = {}) => social.patch("/social/accounts/profile/", data, config),
   changePassword: (data) => social.put("/social/accounts/change-password/", data),
   updateUser: (data) => social.patch("/social/accounts/update/", data),

@@ -23,6 +23,8 @@ function Form({route, method}) {
         try {
             // making a post to the route whichever it is with our username and password
             // this will be handled in the backend which sends a post request to whichever route in the backend
+            // if its register itll send to the register route and then redirect to the login route
+            // if its login it will just navigate to the homepage afterwards
             const res = await social.post(route, { username, password })
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);

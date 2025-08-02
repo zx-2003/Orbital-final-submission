@@ -29,7 +29,7 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="get_token"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth/", include("rest_framework.urls")),
-    # anyth that includes api/ redirect to the urls in the api app, then handle from there. 
+    # redirect other requests according to whats infront of the url to other applications
     path("social/", include("social.urls")),
     path("social/accounts/", include("accounts.urls")),
     path('promotions/', include('promotions.urls')),

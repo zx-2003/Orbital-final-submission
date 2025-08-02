@@ -8,9 +8,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     image = models.ImageField(upload_to="post_images/", blank=True, null=True)
-    location = models.CharField(max_length=255, blank=True, null=True) #display if present
-    place_id = models.CharField(max_length=255, blank=True, null=True) #dont display, backend purpose only
-    rating = models.IntegerField(blank=True, null=True) #limit this from 1 to 5, display if present
+    location = models.CharField(max_length=255, blank=True, null=True) # display if present
+    place_id = models.CharField(max_length=255, blank=True, null=True) # dont display, backend purpose only
+    rating = models.IntegerField(blank=True, null=True) # limit this from 1 to 5, display if present
 
     def __str__(self):
         return self.title

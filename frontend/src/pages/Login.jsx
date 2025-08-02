@@ -17,7 +17,7 @@ function Login() {
                         cursor:"pointer",
                     }
                 } 
-                    onClick={() => {navigate("/register")}}>Don't have an account? Register here</p>
+                    onClick={() => {navigate("/register")}}>Register here</p>
             </div>
         </div>
     )

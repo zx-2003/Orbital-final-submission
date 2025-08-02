@@ -1,3 +1,7 @@
+IMPORTANT (credits):
+The setting up of jwt tokens and basic settings including protected routes, app.jsx and registration forms were inspired from:
+https://www.youtube.com/watch?v=c-QsfbznSXI&t=6845s
+
 Instructions to test:
 - Download the repository
 - (Compulsory) Setup own mySQLDB and configure backend > config > DATABASES with own database information

@@ -33,6 +33,9 @@ class PostSerializer(serializers.ModelSerializer):
         extra_kwargs = {"author": {"read_only": True}}
     
     # the obj refers to the model instance being serialized and in this case that's the post model
+    # the information being saved is the fields related to the Post object itself. Additional fields such as "author_username"
+    # are just added and sent to the frontend respectively when required. Kind of like the Post object being the engine
+    # of the car and the additional fields are the info that shows up on the dashboard and are sent as part of the API response
     def get_author_username(self, obj):
         return obj.author.username
     
