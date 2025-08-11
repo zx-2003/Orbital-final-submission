@@ -116,19 +116,20 @@ def parse_telepromo(text):
     
     restaurant_name = None
     deal_type = None
-    active_dates = None #this a list field
+    deal_text = None
+    active_dates = []
+    active_dates_text = ""
     location = None
     more_info_url = None
 
     if lines[0]: #first line restaurant name
-        restaurant_name = re.sub(r'[^\w\s&%.,\'\-]', '', lines[0]).strip() #remove emoji
+        restaurant_name = re.sub(r'[^\w\s&%.,\'\-]', '', lines[0]).strip() #remove emoji and only keep name-related chars
 
-    if re.search(r'Promo Code', restaurant_name, re.IGNORECASE): #maybe include promocode eventually? might need to handle location/date also
-        print('PromoCode, tempignore')
+    if re.search(r'Promo Code', restaurant_name, re.IGNORECASE): #series of promocodes, unable to parse data as it is solely a picture and TnC from the tele
         return
 
     regex_datestr = r'\d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
-    regex_timestr = r'\b(0?[1-9]|1[0-2])(:([0-5][0-9]))?(am|pm)\b' #time format
+    regex_timestr = r'\b(0?[1-9]|1[0-2])(:([0-5][0-9]))?(am|pm)\b' #time format for time implementations specifics if required in future
 
     for line in lines[1:-1]:
         line = line.strip()
@@ -136,11 +137,15 @@ def parse_telepromo(text):
 
         #date
         if re.search(regex_datestr, line): #just date
-            active_dates = parse_dates(line)
+            parsed_dates = parse_dates(line)
+            if parsed_dates:
+                active_dates.extend(parsed_dates)
+                active_dates_text += line.strip() + " | "
 
         #deals
         if line.startswith('✅') and not deal_type: 
             deal_type = classify_deal_type(line)
+            deal_text = line
 
         #location
         if line.startswith('📍') or re.search(r'@ ?(?!\$)\S+', line): # @ location but not @ $price
@@ -150,18 +155,23 @@ def parse_telepromo(text):
         if "more info [here]" in line: 
             more_info_url = extract_hyperlink(line)
 
-    if not active_dates:
-        print('Missing date')
-        return #if these fields are missing then ignore, should log somewhere
+    if not active_dates: #unable to continue as date is not provided or wrongly keyed
+        print("no date")
+        return 
     
-    if not location:
-        print('Missing Location')
-        return #might need to log somehwre
+    if not location: #unable to continue as location is missing
+        print("no location")
+        return
+    
+    active_dates = sorted(list(set(active_dates))) #remove dupes and sort again by unique set then convert to list
+    active_dates_text = active_dates_text.rstrip(" | ") #remove last " | " from the end
 
     return {
         'restaurant_name': restaurant_name,
         'deal_type': deal_type,
+        'deal_text': deal_text,
         'active_dates': active_dates if active_dates else None, 
+        'active_dates_text': active_dates_text,
         'location': location,
         'more_info_url': more_info_url
     }

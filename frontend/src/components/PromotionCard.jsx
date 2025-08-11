@@ -20,13 +20,13 @@ export default function ({ promotion }) {
                     {promotion.restaurant_name}
                 </h2>
                 <p style={{ margin: 0, fontSize: '14px' }}>
-                    {promotion.deal_type}
+                    {promotion.deal_text}
                 </p>
                 <p style={{ margin: 0, fontSize: '14px' }}>
                     {promotion.location}
                 </p>
                 <p style={{ margin: 0, fontSize: '14px' }}> 
-                    {promotion.active_dates[promotion.active_dates.length - 1]} {/* this needs to follow the original */}
+                    {promotion.active_dates_text}
                 </p>
                 <p>
                     {promotion.more_info_url &&
@@ -35,11 +35,6 @@ export default function ({ promotion }) {
                         </a>
                     }
                 </p>
-                {/*
-                <p>
-                    {promotion.full_message_text}
-                </p>    strip this message for display instead*/}
-
             </div>
             <img
                 src={promoImage}

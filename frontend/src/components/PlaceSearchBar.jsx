@@ -26,6 +26,7 @@ export default function PlaceSearchBar({ onResults, filters }) {
 
     const preferences = filters?.preference?.length > 0 ? filters.preference.join(" ") : "";
     const minRate = filters?.rating || 0.5;
+    const prices = filters?.price ?? []
 
     const rawQuery = recommendationQuery ?? queryText; //check nullity on pass for search/recommend
     const filterQuery = preferences; //placeholder, base on filter add this to request, append dietary restrictions of user to the front of filter
@@ -53,7 +54,7 @@ export default function PlaceSearchBar({ onResults, filters }) {
       maxResultCount: 8, //can increase this for deployment, max 20 (but each consumes an API)
       region: "sg",
       //useStrictTypeFiltering: false,
-      //priceLevels: [array of pricelevels]
+      priceLevels: prices
     };
 
     try {
