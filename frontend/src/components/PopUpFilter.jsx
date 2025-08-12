@@ -21,7 +21,7 @@ export default function PopUpFilter({ onClose, children }) {
                     }}
                     onClick={onClose} //exit before apply change option to close popup
                 >
-                    X {/* it will look like a cheeto without this X */}
+                    X {/* simple X button fix */}
                 </button>
                 {children}
             </div>

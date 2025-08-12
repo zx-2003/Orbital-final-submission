@@ -20,13 +20,13 @@ export default function ({ promotion }) {
                     {promotion.restaurant_name}
                 </h2>
                 <p style={{ margin: 0, fontSize: '14px' }}>
-                    {promotion.deal_text}
+                    {promotion.deal_text} {/* this is raw deal text */}
                 </p>
                 <p style={{ margin: 0, fontSize: '14px' }}>
                     {promotion.location}
                 </p>
                 <p style={{ margin: 0, fontSize: '14px' }}> 
-                    {promotion.active_dates_text}
+                    {promotion.active_dates_text} {/* this is concat active dates*/}
                 </p>
                 <p>
                     {promotion.more_info_url &&

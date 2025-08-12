@@ -1,6 +1,5 @@
 from django.db import models
 from datetime import date
-# Create your models here.
 
 class FoodPromotionManager(models.Manager): #prefilter to only return promotions that are still valid (contains a date that hasnt passed)
     def is_valid(self):

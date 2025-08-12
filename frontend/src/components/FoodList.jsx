@@ -14,7 +14,7 @@ export default function FoodList({ results, onCardClick, selectedPlace }) {
               key={JSON.stringify(place)} //cannot use idx here as it preserves state, need to match exact so review doesnt stay open on new search
               onClick={() => onCardClick(place)}
               style={{
-                cursor: "pointer", //change arrow to finger (look clickable)
+                cursor: "pointer", 
                 boxShadow: isSelected ? "0 0px 6px rgba(252, 121, 7, 0.8)" : "none", //highlight if selected
                 borderRadius: "8px"
               }}

@@ -17,7 +17,7 @@ export default function Promotion() {
     const loadPromotions = async (filterParams = {}) => {
         setLoading(true);
         try {
-            const results = await promotionsApi.getAllPromotions(filterParams);
+            const results = await promotionsApi.getAllPromotions(filterParams); //pass the filters selected when getting promotions through API
             console.log("Fetched Promotion:", results.data);
             setPromotions(results.data);
         } catch (error) {

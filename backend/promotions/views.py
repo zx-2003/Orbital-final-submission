@@ -5,7 +5,6 @@ from .serializers import FoodPromotionSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from datetime import date
 
-# Create your views here.
 class FoodPromotionList(generics.ListAPIView): 
 
     serializer_class = FoodPromotionSerializer

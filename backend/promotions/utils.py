@@ -1,7 +1,7 @@
 import re
 from datetime import datetime, timedelta
 
-def classify_deal_type(deal_text): #ok
+def classify_deal_type(deal_text): #works
     #BOGO: buy X ... get X ... | X-for-X
     if re.search(r'(?i)\b(?:buy\s+\d+[,\s]*(?:and|&)?\s*(?:get|free)\s+\d+|\d+[-\s]for[-\s]\d+)\b', deal_text):
         return "BOGO"
@@ -18,9 +18,9 @@ def classify_deal_type(deal_text): #ok
     if re.search(r'(?i)\bfree\b.*\b\w+\b', deal_text):
         return "Freebie"
     
-    return "Others"  #default if no match
+    return "Others" #default if no match
 
-def parse_dates(date_str): #ok
+def parse_dates(date_str): #works
     today = datetime.today().date()
     dates = []
     
@@ -93,7 +93,7 @@ def parse_dates(date_str): #ok
     
     return []
 
-def parse_location(location_line): #ok
+def parse_location(location_line): #works
 
     #for pinned
     location_match = re.search(r'📍\s*(.*)', location_line)
@@ -105,7 +105,7 @@ def parse_location(location_line): #ok
         return at_match.group(1).strip()
     return None
 
-def extract_hyperlink(hypertext): # ok
+def extract_hyperlink(hypertext): #works
     url_match = re.search(r'https?://[^\s)]+', hypertext) 
     return url_match.group(0) if url_match else None
     
@@ -133,13 +133,13 @@ def parse_telepromo(text):
 
     for line in lines[1:-1]:
         line = line.strip()
-        #can't use elif structure as diff fields are sometimes concat with each other
+        #can't use elif structure as diff fields are sometimes concat with each other for message itself
 
         #date
         if re.search(regex_datestr, line): #just date
             parsed_dates = parse_dates(line)
             if parsed_dates:
-                active_dates.extend(parsed_dates)
+                active_dates.extend(parsed_dates) #add on more dates to list as more parses go through
                 active_dates_text += line.strip() + " | "
 
         #deals

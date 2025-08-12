@@ -73,4 +73,4 @@ class Command(BaseCommand):
             await client.start()
             await client.run_until_disconnected()
         
-        asyncio.run(start_telegram()) #run locally, then dockerize telegram session as image after keying in OTP
+        asyncio.run(start_telegram()) #run locally, then dockerize telegram session as image after keying in OTP (as a separate run)

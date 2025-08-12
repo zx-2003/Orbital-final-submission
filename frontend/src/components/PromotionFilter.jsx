@@ -15,7 +15,7 @@ export default function PromotionFilter({ onFilter }) {
     const toggleDealType = (type) => {
         setSelectedDealTypes(prev =>
             prev.includes(type) //check whether already selected
-                ? prev.filter(t => t !== type) //unselect the item if was previoysly selected (unchecking)
+                ? prev.filter(t => t !== type) //unselect the item if was previously selected (unchecking)
                 : [...prev, type] //add the item if newly selected (checking)
         );
     };

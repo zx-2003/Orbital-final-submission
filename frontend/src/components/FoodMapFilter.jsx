@@ -47,7 +47,7 @@ export default function FoodMapFilter({ onFilter, initialFilters = {} }) {
     const togglePreference = (preference) => {
         setSelectedPreferences(prev =>
             prev.includes(preference) //check whether already selected
-                ? prev.filter(p => p !== preference) //unselect the item if was previoysly selected (unchecking)
+                ? prev.filter(p => p !== preference) //unselect the item if was previously selected (unchecking)
                 : [...prev, preference] //add the item if newly selected (checking)
         );
     };

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import placeholderPlaceDetailImage from "../assets/Maps_PlaceDetail_Marketplace_Image.png"
 
-export default function PlaceDetailCard({ place }) { //need placeid here and import places to use reviews and photos here?
+export default function PlaceDetailCard({ place }) { 
 
   const [showReview, setShowReview] = useState(false)
 
   const {
     displayName,
     formattedAddress,
-    rating, //this needs to be truncated if cost issue (enterprise lvl)
-    userRatingCount, //this also needs to be truncated if cost issue (enterprise lvl)
+    rating, // (enterprise lvl pricing)
+    userRatingCount, // (enterprise lvl)
     photos, 
     types,
-    reviews,//this also needs to be truncated if cost issue (enterprise lvl)
+    reviews,// (enterprise lvl)
   } = place; //copy over place data
 
   const photoURI = photos?.[0] ? place.photos[0].getURI({ maxHeight: 400 }) : placeholderPlaceDetailImage; //called per result, use placeholder only to reduce cost
@@ -32,7 +32,7 @@ export default function PlaceDetailCard({ place }) { //need placeid here and imp
         <img
           src={photoURI}
           alt={displayName}
-          loading="lazy" //load image only when it enters viewport
+          loading="lazy"
           style={{ width: "80px", height: "80px", borderRadius: "6px", objectFit: "cover" }} //fix image size 80x80, cropped
         />
       )}
@@ -41,7 +41,7 @@ export default function PlaceDetailCard({ place }) { //need placeid here and imp
         <p style={{ margin: "4px 0", fontSize: "14px" }}> {/* standard para */}
           {formattedAddress || "Address not available"}
         </p>
-        {rating && ( //make reviews clickable which pops out a buncha reviews
+        {rating && ( //make reviews clickable which pops out a bunch of reviews
           <p style={{ margin: "4px 0", fontSize: "14px" }}>
             ⭐ {rating} {' '}
             <span onClick={() => { setShowReview(!showReview) }} style={{ color: 'blue', cursor: 'pointer' }}>
@@ -51,7 +51,7 @@ export default function PlaceDetailCard({ place }) { //need placeid here and imp
           </p>
         )}
 
-        {showReview && reviews?.length > 0 && ( //need to make this fetch only on click, rather than prefetching for all results for cost management
+        {showReview && reviews?.length > 0 && ( //this fetches all reviews at one go (can be cost optimized further)
           <div style={{
             fontSize: "12px",
             scrollMarginTop: "6px",
@@ -61,7 +61,7 @@ export default function PlaceDetailCard({ place }) { //need placeid here and imp
             maxHeight: "100px",
             overflowY: "auto"
           }}>
-            {reviews.map((review, idx) => (
+            {reviews.map((review, idx) => ( //ensure the reviews are to the correct place
               <div key={idx} style={{ marginBottom: "8px" }}>
                 <p> {review.authorAttribution.displayName} - {review.rating}⭐ </p>
                 <p> {review.text} </p>
@@ -70,9 +70,9 @@ export default function PlaceDetailCard({ place }) { //need placeid here and imp
           </div>
         )}
 
-        {types && (
+        {types && ( 
           <p style={{ fontSize: "12px", marginTop: "6px" }}>
-            {types.filter(type => !["food", "establishment", "point_of_interest"].includes(type))
+            {types.filter(type => !["food", "establishment", "point_of_interest"].includes(type)) //remove these specific types as they are common and recurring to all returned food types
               .map(type => type.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())) // '/smth/g' matches all corresponding globally
               .join(", ")}
           </p>

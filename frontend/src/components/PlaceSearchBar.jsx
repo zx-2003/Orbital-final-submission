@@ -13,7 +13,7 @@ export default function PlaceSearchBar({ onResults, filters }) {
 
     const { Place } = await window.google.maps.importLibrary("places");
 
-    let restrictionQuery = ""; //users' dietary restrictions (maybe should limit this to just recommendations? (this heavily influences searchbar atp)) ~ maybe add restriction toggle instead as well (handleRestrictions default true smth liddat)
+    let restrictionQuery = ""; //users' dietary restrictions 
     try {
       const results = await accountsApi.getProfile();
       const restrictions = results?.data.dietary_requirements
@@ -29,31 +29,30 @@ export default function PlaceSearchBar({ onResults, filters }) {
     const prices = filters?.price ?? []
 
     const rawQuery = recommendationQuery ?? queryText; //check nullity on pass for search/recommend
-    const filterQuery = preferences; //placeholder, base on filter add this to request, append dietary restrictions of user to the front of filter
-    const finalQuery = rawQuery.toLowerCase().includes("food") //add more exclusions? (restaurant, cafe, bar, diner etc)
+    const filterQuery = preferences; 
+    const finalQuery = rawQuery.toLowerCase().includes("food") //since typeAB has restrictions on 1 per call i.e food or cafe or restaurant, use "food" as text prompt to restrict all search to food related
       ? `${restrictionQuery} ${filterQuery} ${rawQuery}`
-      : `${restrictionQuery} ${filterQuery} ${rawQuery} food`; //improve query to match towards food-related search, change this another time?
+      : `${restrictionQuery} ${filterQuery} ${rawQuery} food`;
 
-    const request = { //make this dynamic, enable filter to change specific items in query here (more for recommendations)
+    const request = { 
       textQuery: finalQuery,
-      fields: [ //fields wanted from the request (will have to change this to fit costs)
+      fields: [ //fields wanted from the request 
         "displayName",
         "location",
         "formattedAddress",
         "rating",
         "userRatingCount", //num user reviews
-        "photos", //to decide on cost management
+        "photos",
         "types",
-        "reviews", //add reviews, to decide on cost management
+        "reviews", //add reviews
       ],
       //includedType: "restaurant", this is limited to 1 type (typeA) only. easier to just not have this (let them search bicycles), filter typeB food returned results instead 
       //locationBias: { lat: 1.3521, lng: 103.8198 },
-      //isOpenNow: true, //should probably include this as well so it restricts to currently avail restaurants? at most use as display would work as well
+      //isOpenNow: true,
       language: "en-UK",
       minRating: minRate, //this is to filter out duds, but still include bad restaurants
-      maxResultCount: 8, //can increase this for deployment, max 20 (but each consumes an API)
+      maxResultCount: 10, //can be increased, max 20 (but each consumes an API)
       region: "sg",
-      //useStrictTypeFiltering: false,
       priceLevels: prices
     };
 
@@ -72,7 +71,7 @@ export default function PlaceSearchBar({ onResults, filters }) {
 
   const handleRecommendation = async () => {
     try {
-      const results = await accountsApi.getProfile(); //*change this to getRecommendation and create a backend algorithm to shuffle recommendation based on dietary preferences instead
+      const results = await accountsApi.getProfile(); 
       const preferences = results?.data.dietary_preferences
       const recommendation = preferences !== null && preferences !== undefined
         ? `${preferences.join(" ")} highly recommended` //"popular" generates slightly different results as well

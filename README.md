@@ -1,4 +1,4 @@
-Instructions to test:
+Instructions to test locally:
 - Download the repository
 - (Compulsory) Setup own mySQLDB and configure backend > config > DATABASES with own database information
 - (Compulsory) Set up .env as with .env.example in your root directory, replace necessary API keys and Hash.
@@ -42,8 +42,8 @@ Frontend Startup:
   - `.venv\Scripts\Activate.ps1`
   - `cd backend`
   - `python manage.py listen_telegram `
-  - Enter in your telegram user and 2fa code
-  - Send prompts into a temporary telegram channel, formatted as per .env.example's telegram channel. Message format taken from @ https://t.me/kiasufoodies
+  - Enter in your telegram user phone number and 2fa code (sent by telegram)
+  - Send prompts into a temporary telegram channel for direct testing, formatted as per .env.example's telegram channel. Message format taken from @ https://t.me/kiasufoodies
 
 User guide (app functionality and navigation):
   Authentication:
@@ -67,11 +67,17 @@ User guide (app functionality and navigation):
 
   Promotions:
   - Promotions will appear in the list only if parsed by an active telethon parser, with appropriate formatting of food promotion from telegram channel.
+  - Users can filter promotions using the filter button, and select type of promotion to filter and if the promotion is ongoing today, or coming up (all promotions that have expired are filtered out by default already)
 
   Food Finder Map
   - Allows Google's text search query (try: hotdogs in orchard) for food type in an area
+  - Autocomplete integrated to suggest and improve users experience by populating search result predictions based on user input (will default back to textsearch if user does not click on a suggested location)
   - Interactive Place Detail Cards that pan and zoom to location on map, creates an InfoWindow on marker
   - Dynamic map allows drag and scroll with real-time map features
+  - Recommendation feature that uses Google's text search and your user profile preference to recommend food places
+  - Soft filters that improves suggested food locations if implemented (not a hard filter as it places too much restriction on returned results)
+  - Top 5 Reviews of each food location (if present on Google Reviews) if user clicks on Reviews
+
 
 
 
