@@ -12,7 +12,7 @@ IMPORTANT:
 - This will eat into the credits, of course. 
 
 Our website link: 
-https://deployment2-gl8g.vercel.app/
+https://orbital-final-submission-pnna.vercel.app
 
 
 Backend Startup:
